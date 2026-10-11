@@ -1,0 +1,13 @@
+{
+  "domain": "baseus_anti_lost",
+  "name": "Baseus Anti-Lost T2",
+  "codeowners": ["@jakubhegr18-design"],
+  "config_flow": true,
+  "documentation": "https://github.com/jakubhegr18-design/homeassistant-baseus-anti-lost",
+  "issue_tracker": "https://github.com/jakubhegr18-design/homeassistant-baseus-anti-lost/issues",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "dependencies": ["bluetooth"],
+  "requirements": ["bleak>=0.22.0"],
+  "version": "1.0.0"
+}

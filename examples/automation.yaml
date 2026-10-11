@@ -1,0 +1,104 @@
+# Baseus Anti-Lost T2 Automations
+# Reverse engineered from Baseus APK - com.baseus.intelligent
+
+# Automation 1: Notify when Anti-Lost T2 device is marked as lost
+automation:
+  - alias: "Notify when Anti-Lost T2 is lost"
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.baseus_anti_lost_device_lost
+        to: "on"
+    action:
+      - service: notify.mobile_app_petr_phone
+        data:
+          message: "🚨 Anti-Lost T2 device has been marked as LOST! Last known location recorded."
+          data:
+            title: "Anti-Lost T2 Alert"
+            tag: "anti_lost_lost"
+            image: "/local/warning.png"
+
+  - alias: "Notify when Anti-Lost T2 reconnects"
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.baseus_anti_lost_bluetooth_connected
+        to: "on"
+    action:
+      - service: notify.mobile_app_petr_phone
+        data:
+          message: "✅ Anti-Lost T2 device has reconnected! Bluetooth connection restored."
+          data:
+            title: "Anti-Lost T2 Reconnected"
+            tag: "anti_lost_reconnected"
+            image: "/local/connected.png"
+
+  - alias: "Notify when Anti-Lost T2 out of range"
+    trigger:
+      - platform: state
+        entity_id: sensor.baseus_anti_lost_tracking_status
+        to: "out_of_range"
+    action:
+      - service: notify.mobile_app_petr_phone
+        data:
+          message: "⚠️ Anti-Lost T2 is out of Bluetooth range. Current location being recorded."
+          data:
+            title: "Anti-Lost T2 Out of Range"
+            tag: "anti_lost_out_of_range"
+            image: "/local/alert.png"
+
+  - alias: "Start tracking when device marked lost"
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.baseus_anti_lost_device_lost
+        to: "on"
+    action:
+      - service: baseus_anti_lost.start_tracking
+        target:
+          device_id: "{{ states('sensor.baseus_anti_lost_device_id') }}"
+
+  - alias: "Stop tracking when device found"
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.baseus_anti_lost_device_lost
+        from: "on"
+    action:
+      - service: baseus_anti_lost.stop_tracking
+        target:
+          device_id: "{{ states('sensor.baseus_anti_lost_device_id') }}"
+
+  - alias: "Automatically navigate to last known location"
+    trigger:
+      - platform: state
+        entity_id: sensor.baseus_anti_lost_tracking_status
+        to: "lost"
+    action:
+      - service: map.navigation_map
+        target:
+          latitude: "{{ states('sensor.baseus_anti_lost_last_known_lat') }}"
+          longitude: "{{ states('sensor.baseus_anti_lost_last_known_lon') }}"
+          message: "Navigate to Anti-Lost T2 last known location"
+
+  - alias: "Low battery notification"
+    trigger:
+      - platform: state
+        entity_id: sensor.baseus_anti_lost_battery_level
+        to: "below_20"
+    action:
+      - service: notify.mobile_app_petr_phone
+        data:
+          message: "🔋 Anti-Lost T2 battery is low ({{ states('sensor.baseus_anti_lost_battery_level') }}%). Charge device soon."
+          data:
+            title: "Anti-Lost T2 Low Battery"
+            tag: "anti_lost_battery"
+            image: "/local/battery_low.png"
+
+  - alias: "Daily status report"
+    trigger:
+      - platform: time
+        at: "09:00:00"
+    action:
+      - service: notify.mobile_app_petr_phone
+        data:
+          message: "📊 Daily Anti-Lost T2 status report:\n- Connection: {{ states('sensor.baseus_anti_lost_connection_status') }}\n- Tracking: {{ states('sensor.baseus_anti_lost_tracking_status') }}\n- Battery: {{ states('sensor.baseus_anti_lost_battery_level') }}%\n- Last seen: {{ states('sensor.baseus_anti_lost_last_seen') }}s ago"
+          data:
+            title: "Anti-Lost T2 Daily Report"
+            image: "/local/report.png"

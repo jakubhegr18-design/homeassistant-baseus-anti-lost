@@ -1,0 +1,69 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Baseus Anti-Lost T2",
+        "description": "Choose how you want to connect to your tracker.",
+        "menu_options": {
+          "bluetooth": "Bluetooth (local, no account)",
+          "account": "Baseus account (cloud)"
+        }
+      },
+      "bluetooth": {
+        "title": "Select device",
+        "description": "Select a discovered Baseus tracker, or enter its Bluetooth address manually.",
+        "data": {
+          "address": "Bluetooth address (MAC)"
+        }
+      },
+      "account": {
+        "title": "Baseus account",
+        "description": "Sign in with your Baseus account and provide the tracker address.",
+        "data": {
+          "name": "Device name",
+          "address": "Bluetooth address (MAC)",
+          "email": "Email",
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to the device.",
+      "invalid_auth": "Invalid credentials.",
+      "unknown": "Unexpected error."
+    },
+    "abort": {
+      "already_configured": "This device is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Anti-Lost T2 options",
+        "data": {
+          "rssi_threshold": "RSSI threshold (dBm)",
+          "out_of_range_timeout": "Out-of-range timeout (seconds)",
+          "notify_when_lost": "Notify when lost",
+          "enable_location_tracking": "Enable location tracking"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "signal_strength": { "name": "Signal strength" },
+      "connection_status": { "name": "Connection status" },
+      "last_seen": { "name": "Last seen" },
+      "battery_level": { "name": "Battery" },
+      "tracking_status": { "name": "Tracking status" },
+      "distance_estimate": { "name": "Distance" }
+    },
+    "binary_sensor": {
+      "device_lost": { "name": "Device lost" },
+      "bluetooth_connected": { "name": "Bluetooth connected" }
+    },
+    "switch": {
+      "anti_lost_enabled": { "name": "Anti-lost tracking" }
+    }
+  }
+}
