@@ -9,5 +9,12 @@
   "iot_class": "local_polling",
   "dependencies": ["bluetooth"],
   "requirements": ["bleak>=0.22.0"],
-  "version": "1.0.0"
+  "version": "1.1.0",
+  "bluetooth": [
+    { "local_name": "Baseus*" },
+    { "local_name": "*Anti-Lost*" },
+    { "local_name": "*AntiLost*" },
+    { "local_name": "ANTI-LOST*" },
+    { "local_name": "T2*" }
+  ]
 }

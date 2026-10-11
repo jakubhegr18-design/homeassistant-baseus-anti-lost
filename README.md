@@ -53,13 +53,28 @@ Copy `custom_components/baseus_anti_lost` into your
 
 ## Configuration
 
-The integration is set up entirely from the UI (**Settings → Devices & Services →
-Add Integration → Baseus Anti-Lost T2**), which offers two modes:
+### Automatic discovery
+
+When the tracker is powered on and in range, Home Assistant detects it via
+Bluetooth and shows a **"Baseus Anti-Lost T2 discovered"** prompt under
+**Settings → Devices & Services**. Confirm it and the device is added
+automatically. Discovery matches the advertised local name against the patterns
+`Baseus*`, `*Anti-Lost*`, `*AntiLost*`, `ANTI-LOST*` and `T2*` (see the
+`bluetooth` matcher in `manifest.json`).
+
+### Manual setup
+
+You can also add it by hand via **Settings → Devices & Services → Add
+Integration → Baseus Anti-Lost T2**, which offers two modes:
 
 - **Bluetooth (local, no account)** — picks a discovered Baseus tracker or asks
   for its Bluetooth (MAC) address.
 - **Baseus account (cloud)** — signs in with your Baseus email/password and the
   tracker address.
+
+> If your tracker is not auto-detected, its advertised Bluetooth name likely does
+> not match the patterns above. Open an issue with the name shown in the passive
+> Bluetooth scanner and it can be added to the matcher.
 
 ### Options
 

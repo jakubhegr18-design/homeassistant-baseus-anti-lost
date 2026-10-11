@@ -9,7 +9,11 @@
           "account": "Baseus account (cloud)"
         }
       },
-      "bluetooth": {
+      "bluetooth_confirm": {
+        "title": "Baseus tracker discovered",
+        "description": "Do you want to add the discovered tracker **{name}**?"
+      },
+      "user_bluetooth": {
         "title": "Select device",
         "description": "Select a discovered Baseus tracker, or enter its Bluetooth address manually.",
         "data": {
